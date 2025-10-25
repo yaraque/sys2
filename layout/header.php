@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="<?php echo app_url;?>/public/plugins/fontawesome-free/css/all.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="<?php echo app_url;?>/public/dist/css/adminlte.min.css">
+        <!-- Iconos de Bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
