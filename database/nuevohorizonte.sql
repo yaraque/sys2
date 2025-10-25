@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-10-2025 a las 02:23:01
+-- Tiempo de generación: 25-10-2025 a las 02:35:52
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -185,6 +185,13 @@ CREATE TABLE `roles` (
   `estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id_rol`, `descripcion_rol`, `fyh_creacion`, `fyh_actualizacion`, `estado`) VALUES
+(1, 'ADMINISTRADOR', '2025-04-01 20:31:10', '2025-04-01 20:31:10', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -200,6 +207,15 @@ CREATE TABLE `usuarios` (
   `fyh_actualizacion` datetime DEFAULT NULL,
   `estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `rol_id`, `nom_usuario`, `contrasena`, `fyh_creacion`, `fyh_actualizacion`, `estado`) VALUES
+(1, 1, 'YARAQUE', '$2y$10$t4BvEzRRAM.f8XArbRVRTe.KMFszqEJqypfu34bpJ5P88rcQqGDQK', '2025-04-01 20:29:57', '2025-04-01 20:29:57', '1'),
+(2, 1, 'BCARRILLO', '$2y$10$t4BvEzRRAM.f8XArbRVRTe.KMFszqEJqypfu34bpJ5P88rcQqGDQK', '2025-04-01 14:53:51', '2025-04-01 20:29:57', '1'),
+(3, 1, 'NSOLANO', '$2y$10$t4BvEzRRAM.f8XArbRVRTe.KMFszqEJqypfu34bpJ5P88rcQqGDQK', '2025-04-01 14:53:51', '2025-04-01 14:53:51', '1');
 
 --
 -- Índices para tablas volcadas
@@ -352,7 +368,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
