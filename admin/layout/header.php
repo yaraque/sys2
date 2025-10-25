@@ -72,7 +72,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="../roles/index.php" class="nav-link">
                   <i class="bi bi-person-lines-fill"></i>
                   <p>Lista de Usuarios</p>
                 </a>
@@ -89,7 +89,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?php echo app_url;?>admin/roles/index.php" class="nav-link">
                   <i class="bi bi-list-task"></i>
                   <p>Lista de Roles</p>
                 </a>
