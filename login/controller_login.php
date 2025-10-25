@@ -1,64 +1,54 @@
 <?php
-// sys/login/controller_login.php
-session_start();
-include_once("../app/conexion.php");
+include_once '../app/conexion.php';
 
-// Verificar que sea método POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo "Error: Método no permitido";
-    exit();
+// Iniciar sesión
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// Obtener datos del formulario
-$usuario = trim($_POST['usuario'] ?? '');
-$contrasena = $_POST['contrasena'] ?? '';
-
-// Validar campos vacíos
-if (empty($usuario) || empty($contrasena)) {
-    echo "Por favor ingresa tu usuario y contraseña";
-    exit();
-}
-
-try {
-    // Crear conexión
-    $db = new Conexion();
-    $mysqli = $db->getConexion();
+// Solo procesar si es POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom_usuario']) && isset($_POST['contrasena'])) {
     
-    // Buscar usuario en la base de datos
-    $sql = "SELECT id, nom_usuario, contrasena FROM usuarios WHERE nom_usuario = ?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $usuario);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $nom_usuario = $_POST['nom_usuario'];
+    $contrasena = $_POST['contrasena'];
     
-    // Verificar si el usuario existe
-    if ($result->num_rows === 0) {
-        echo "Usuario o contraseña incorrectos";
+    // Validar que no estén vacíos
+    if (empty($nom_usuario) || empty($contrasena)) {
+        $_SESSION['error_login'] = 'Todos los campos son obligatorios';
+        header('Location: index.php');
         exit();
     }
     
-    // Obtener datos del usuario
-    $usuarioData = $result->fetch_assoc();
+    // Conectar a la base de datos
+    $conexion = Conexion::getInstancia();
+    $conn = $conexion->getConexion();
+    
+    // Buscar usuario por NOMBRE
+    $sql = "SELECT nom_usuario, contrasena FROM usuarios WHERE nom_usuario = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $nom_usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
     $stmt->close();
     
-    // Verificar contraseña HASHEADADA
-    $contrasena_bd = $usuarioData['contrasena'];
-    
-    // DEBUG: Mostrar información temporalmente
-    // echo "Contraseña BD: " . $contrasena_bd . "<br>";
-    // echo "Contraseña ingresada: " . $contrasena . "<br>";
-    // echo "¿Es hash válido?: " . (password_verify($contrasena, $contrasena_bd) ? "Sí" : "No");
-    
-    if (password_verify($contrasena, $contrasena_bd)) {
-        // Login exitoso
-        $_SESSION['id_usuario'] = $usuarioData['id'];
-        $_SESSION['usuario'] = $usuarioData['nom_usuario'];
-        echo "¡Bienvenido!";
+    // Verificar si existe el usuario y la contraseña
+    if ($usuario && password_verify($contrasena, $usuario['contrasena'])) {
+        // Login exitoso - redirigir a admin
+        $_SESSION['usuario'] = $nom_usuario;
+        $_SESSION['logged_in'] = true;
+        header('Location: ../admin/index.php');
+        exit();
+        
     } else {
-        echo "Usuario o contraseña incorrectos";
+        $_SESSION['error_login'] = 'Credenciales incorrectas';
+        $_SESSION['usuario_temporal'] = $nom_usuario;
+        header('Location: index.php');
+        exit();
     }
-    
-} catch (Exception $e) {
-    echo "Error del sistema: " . $e->getMessage();
 }
+
+// Si llega aquí sin ser POST, redirigir al login
+header('Location: index.php');
+exit();
 ?>
