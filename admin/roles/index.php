@@ -4,34 +4,30 @@
 ?>
     <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Starter Page</h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-    <!-- Main content -->
+    <br>
     <div class="content">
       <div class="container-fluid">
-        <div class="container">
-          <div class="col-lg-6">
-            dsfsd
-          </div>
-          <!-- /.col-md-6 -->
-          <div class="col-lg-6">
-            
-          </div>
-          <!-- /.col-md-6 -->
+        <div class="row-fluid">
+          <h1><b>Lista de Roles</b></h1>
+          <hr>
+          <table>
+            <head>
+              <tr>
+                <th>Id</th>
+                <th>Descrpción de Rol</th>
+                <th>Acciones</th>
+              </tr>
+            </head>
+            <body>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+            </body>
+          </table>
         </div>
-        <!-- /.container -->
-      </div><!-- /.container-fluid -->
+      </div>
     </div>
-    <!-- /.content -->
+    
   </div>
   <!-- /.content-wrapper -->
   

@@ -37,7 +37,7 @@
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-                <a href="<?php echo app_url;?>index.html" class="brand-link">
+                <a href="<?php echo app_url;?>admin/" class="brand-link">
                     <img src="<?php echo app_url;?>/public/images/logo_escuela.svg" alt="Esucela Logo" class="brand-image">
                     <span class="brand-text font-weight-light"><?=app_inst?></span>
                 </a>
@@ -94,8 +94,13 @@
                   <p>Lista de Roles</p>
                 </a>
               </li>
-              
             </ul>
+          </li>
+          <li class="nav-item menu" style="background-color: blue;">
+            <a href="<?php echo app_url;?>login/logout.php" class="nav-link">
+              <i class="bi bi-box-arrow-right"></i>
+              <p> Cerrar Sesión</p>
+            </a>
           </li>
         </ul>
       </nav>
