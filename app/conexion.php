@@ -5,21 +5,41 @@ class Conexion {
     private $password = "";
     private $database = "nuevohorizonte";
     private $conn;
+    private static $instancia = null;
 
-    public function conectar() {
-        $this->conn = new mysqli($this->hostname, $this->user, $this->password, $this->database);
+    // Patrón Singleton para una única instancia
+    public static function getInstancia() {
+        if (self::$instancia === null) {
+            self::$instancia = new Conexion();
+        }
+        return self::$instancia;
+    }
 
-        if ($this->conn->connect_error) {
-            echo "<script>alert('Error de conexión: " . addslashes($this->conn->connect_error) . "');</script>";
-            return false;
-        } else {
-            //echo "<script>alert('Conexión exitosa a la base de datos');</script>";
-            return true;
+    // Constructor privado para evitar múltiples instancias
+    private function __construct() {
+        $this->conectar();
+    }
+
+    private function conectar() {
+        try {
+            $this->conn = new mysqli($this->hostname, $this->user, $this->password, $this->database);
+            
+            if ($this->conn->connect_error) {
+                throw new Exception("Error de conexión: " . $this->conn->connect_error);
+            }
+            
+            // Configurar charset
+            $this->conn->set_charset("utf8");
+            
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            throw new Exception("Error al conectar con la base de datos");
         }
     }
 
     public function getConexion() {
-        if (!$this->conn) {
+        // Verificar si la conexión está activa
+        if (!$this->conn || !$this->conn->ping()) {
             $this->conectar();
         }
         return $this->conn;
@@ -28,12 +48,14 @@ class Conexion {
     public function desconectar() {
         if ($this->conn) {
             $this->conn->close();
-            // echo "<script>alert('Conexión cerrada');</script>";
+            $this->conn = null;
         }
     }
+
+    // Evitar clonación
+    private function __clone() {}
+    
+    // Evitar serialización
+    public function __wakeup() {}
 }
-
-$nuevohorizonte = new Conexion();
-$nuevohorizonte->conectar();
-
 ?>
